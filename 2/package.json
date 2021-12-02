@@ -1,0 +1,19 @@
+{
+  "name": "adventofcode2021",
+  "version": "1.0.0",
+  "description": "Solution for Advent of Code 2021",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/callumnathanjones/AdventOfCode2021.git"
+  },
+  "author": "Callum Jones",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/callumnathanjones/AdventOfCode2021/issues"
+  },
+  "homepage": "https://github.com/callumnathanjones/AdventOfCode2021#readme",
+  "devDependencies": {
+    "eslint" : "^8.3.0"
+  }
+}
