@@ -128,9 +128,6 @@ class BingoGame {
     }
 
     playNumber(inNum) {
-        if (inNum == 13) {
-            console.log(13);
-        }
         console.log(`(BingoGame) Number played: ${inNum}`);
         this.#boardsWonLastTurn = [];
         for (let i = this.#boardsInPlay.length - 1; i >= 0; i--) {
@@ -152,34 +149,8 @@ class BingoGame {
     }
 }
 
-class BingoService {
-    
-    async SimulateGameFirstWinnerFromFile(filePath) {
-        let winningScore = 0;
-        await this.SimulateGameFromFile(filePath, (winningBoards, boardsInPlay, finishGame) => {
-            if (winningBoards.length) {
-                winningBoards.forEach(board => winningScore = board.score );
-                finishGame();
-            }
-        });
-        return winningScore;
-    }
-
-    async SimulateGameLastWinnerFromFile (filePath) {
-        let winningScore = 0;
-        await this.SimulateGameFromFile(filePath, (winningBoards, boardsInPlay, finishGame) => {
-            if (winningBoards.length) {
-                winningBoards.forEach(board => winningScore = board.score );
-            }
-
-            if (!boardsInPlay.length) {
-                finishGame();
-            }
-        });
-        return winningScore;
-    }
-
-    async SimulateGameFromFile(filePath, onBoardCompleteCallback) {
+module.exports = {
+    SimulateGameFromFile : async (filePath) => {
         const fileContents = await ReadFileToArray(filePath);
         const game = new BingoGame();
 
@@ -212,21 +183,29 @@ class BingoService {
             game.addBoard(newBoard);
         }
         
+        const gameStats = {
+            firstWinningScore : null,
+            lastWinningScore : null,
+        };
+
         const gameInput = fileContents[0].split(',').map(str => parseInt(str));
         for (let i = 0; i < gameInput.length; i++) {
             game.playNumber(gameInput[i]);
 
             const winningBoards = game.getWinningBoardsLastTurn();
             const boardsInPlay = game.getBoardsInPlay();
-            if (onBoardCompleteCallback) {
-                let finishGame = false;
-                onBoardCompleteCallback(winningBoards, boardsInPlay, () => { finishGame = true; })
-                if (finishGame) {
-                    return;
+            
+            if (winningBoards.length) {
+                gameStats.lastWinningScore = winningBoards[0].score;
+
+                if (gameStats.firstWinningScore == null) {
+                    gameStats.firstWinningScore = winningBoards[0].score;
                 }
+            }
+
+            if (!boardsInPlay.length) {
+                return gameStats;
             }
         }
     }
 }
-
-module.exports = new BingoService();

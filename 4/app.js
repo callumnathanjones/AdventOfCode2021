@@ -8,12 +8,9 @@ const LogAnswer = (str) => {
 }
 
 const CalculatePuzzleAnswer = async () => {
-    const firstWinningBingoScore = await bingo.SimulateGameFirstWinnerFromFile(FILE_PATH);
-    LogAnswer(`(Part 1) First-winning bingo score is ${firstWinningBingoScore}.`);
-    
-    const lastWinningBingoScore = await bingo.SimulateGameLastWinnerFromFile(FILE_PATH);
-    LogAnswer(`(Part 2) Last-winning bingo score is ${lastWinningBingoScore}.`);
-    
+    const { firstWinningScore, lastWinningScore } = await bingo.SimulateGameFromFile(FILE_PATH);
+    LogAnswer(`(Part 1) First-winning bingo score is ${firstWinningScore}.`);
+    LogAnswer(`(Part 2) Last-winning bingo score is ${lastWinningScore}.`);
 };
 
 CalculatePuzzleAnswer().catch(e => {
