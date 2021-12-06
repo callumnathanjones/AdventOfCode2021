@@ -1,5 +1,4 @@
 const path = require('path');
-const bingo = require('./bingo');
 
 const FILE_PATH = path.resolve(__dirname, "input_data.txt");
 
