@@ -1,4 +1,8 @@
 /dontcheckin
+.eslintrc.js
+/.vscode
+package-lock.json
+package.json
 # Logs
 logs
 *.log
