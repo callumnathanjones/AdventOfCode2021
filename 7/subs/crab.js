@@ -19,6 +19,7 @@ class CrabSubmarine extends Submarine {
 
 module.exports = {
     FindMostEfficientLineFromFileConst : async (filePath) => {
+        console.log("Fuel usage: constant...");
         const crabs = await CrabSubmarine.FileToArray(filePath);
 
         let min = 0;
@@ -57,6 +58,7 @@ module.exports = {
         }
     },
     FindMostEfficientLineFromFileLinear : async (filePath) => {
+        console.log("Fuel usage: linear...");
         const crabs = await CrabSubmarine.FileToArray(filePath);
 
         let min = 0;
@@ -72,7 +74,7 @@ module.exports = {
 
         let minUsedFuel = Number.POSITIVE_INFINITY;
         let minUsedFuelHorizPos = -1;
-        for (let i = 0; i <= max; i++) {
+        for (let i = min; i <= max; i++) {
             let usedFuel = 0;
             crabs.forEach(crab => {
                 const moved = Math.abs(i - crab.getPos().x);
